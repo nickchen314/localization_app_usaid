@@ -28,9 +28,17 @@ Variables of particular interest are total_obligated_amount, primary_place_of_pe
 
 ### Use Case
 
-This project is aimed towards development professionals, academics, members of NGO's (especially those categorized as local), and interested members of the public. As there is not currently an easily accessible tool to analyze where USAID recipient organizationss are based, this app will help users gain a clear top-level understand of USAID localization trends in a given country.
+This project is aimed towards development professionals, academics, members of NGO's (especially those categorized as local), and interested members of the public. As there is not currently an easily accessible tool to analyze where USAID recipient organizations are based, this app will help users gain a clear top-level understand of USAID localization trends in a given country.
 
-Potential questions of interest include: -What percentage of US aid to a given country is going to local organizations? -Has the proportion of local funding trended upwards or downwards over time? -What are the largest local and non-local recipients of funding in a given country.
+Potential questions of interest include:\
+
+-What percentage of US aid to a given country is going to local organizations?\
+
+-Has the proportion of local funding trended upwards or downwards over time?\
+
+-What are the largest local and non-local recipients of funding in a given country?
+
+Anticipated workflow of uers is as follows. User will begin by selecting a country and year(s) of interest. Based on these filters, user will be able to view a map which displays the country of origin for all recipient organizations conducting projects in selected country for all year(s) of interest. Second tab will display a stacked bar showing percentage of local and non-local funding. User workflow is designed to minimize technical barriers-no data selection is required.
 
 ### Ethical Review
 
@@ -58,7 +66,7 @@ Group Member Names: Nicholas Chen, Tristan Lichter, Orion Freed, Kento Horimai
 
 Our team will follow a "Shared Repository" workflow model where we will create and write to branches based on each major module of our project (e.g. a api branch, data cleaning branch, etc). We deemed this approach most efficient given the small size of our team and the ability to compartmentalize our app's functionality. Branches will be merged with main only after a discussion with all team members.
 
-**Rough Schedule** \
+**Rough Schedule**\
 API Function: 11/9 - Nick\
 Data Cleaning and Exploratory Analysis: 11/17 - Tristan + Kento\
 Progress Report: Orion\
