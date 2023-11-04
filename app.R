@@ -52,8 +52,6 @@ sum(is.na(joined_df$total_obligated_amount)) # 0
 #Checks if recipient location and primary place of performance are the same
 
 
-
-
 # Define UI for application that shows data
 ui <- fluidPage(
 
