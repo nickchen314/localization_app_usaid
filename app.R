@@ -41,8 +41,7 @@ joined_df <- rbind(grants_filtered, conts_filtered) %>%
 # count of na's 
 sum(is.na(joined_df$is.local)) # 3751
 joined_df %>%
-  filter(is.na(is.local)) %>%
-  view() ##can potentially append region based on USAID mission name
+  filter(is.na(is.local)) ##can potentially append region based on USAID mission name
 sum(is.na(joined_df$total_obligated_amount)) # 0
 
 #^use API function once minimal viable product complete
@@ -54,11 +53,47 @@ sum(is.na(joined_df$total_obligated_amount)) # 0
 
 # Define UI for application that shows data
 ui <- fluidPage(
-
+  theme = bs_theme(
+    version = 5, bootswatch = "darkly",
+    bg = "#0b3d91", # a custom blue
+    fg = "white",
+    base_font = "Source Sans Pro"
+  ),
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("number", "select a number", 0, 100, 40),
+      selectInput("countryvar", "Select a Country Code",
+                  choices = c(unique(joined_df$recipient_country_code))),
+      checkboxGroupInput("years", "Select Award Years:", 
+                         choices = unique(joined_df$award_base_action_date_fiscal_year), 
+                         selected = 2022, inline = TRUE),
+      selectInput("grantvar", "Select a Type", choices = c("Grant", "Local")),
+      numericInput("awardvar", "Awarded Money:", 
+                   min = 0, max = max(joined_df$total_obligated_amount), 
+                   value = 0)
+      
+      
+      
+    ),
+    mainPanel(
+      tabsetPanel(
+        tabPanel("a",plotOutput("hist")),
+        tabPanel("b"),
+        tabPanel("c")
+      )
+    )
+  )
 )
 
 server <- function(input, output) {
 
+  output$hist <- renderPlot({
+    
+    ggplot(data = joined_df, mapping = aes(x = recipient_country_code, 
+                                           y = total_obligated_amount, 
+                                           fill = is.local)) +
+      geom_histogram()
+  })
 }
 
 # Run the application 
