@@ -45,6 +45,7 @@ func_clean_df <- function(grants_prime, contracts_prime){
     select(-country_code) %>%
     left_join(code_names, by = join_by("recipient_country_code" == "country_code")) %>%
     rename("recipient_country_name" = "Country")
+  ##note ~20 recipient codes not fully covered
   joined_df3
 }
 
