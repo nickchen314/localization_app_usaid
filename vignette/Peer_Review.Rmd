@@ -9,61 +9,61 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Development Differences Visualizer App Review
+# Development Differences Visualizer App Review
 
 Date of Review: 11/7/2023
 Participants: Nicholas K Chen, Kento Horimai, Suyash Pasi, Murtaza Jawid
 
-User/Actor Workflow:
+## User/Actor Workflow:
 
-1.  Addressing Questions of Interest:
+### 1.  Addressing Questions of Interest:
 
 The app seems to be aimed at addressing fundamental issues such as economic dispersion across nations with comparable starting positions, the importance of exports and democracy in economic development, and the variables that contribute to economic success or failure. The workflow described for researchers, academics, and the general public seems to be adapted to various levels of user skill, which is critical for wide accessibility.
 
-2.  Ease of Following:
+### 2.  Ease of Following:
 
 The workflow looks to be straightforward, with a clear transition from obtaining economic statistics to using statistical models. This logical progression should make it easier for users to use the program. The highlighted case study (Argentina vs. Spain) is a good approach to expose users to the app's potential and urge them to explore.
 
-Overall Layout:
+## Overall Layout:
 
-1.  Supporting User/Actor Flow:
+### 1.  Supporting User/Actor Flow:
 
 The two-tab layout with an emphasis on comparison and indications seems to be user-friendly, offering a concentrated but flexible exploring route. The availability of many plots, as well as the option to conduct regression or ANOVA, allows for an interactive experience in which users may see data in a variety of ways.
 
-2.  Usefulness of Results:
+### 2.  Usefulness of Results:
 
 The app generates quantitative results like as p-values and confidence intervals, which are required for thorough economic research. The capacity of the user to change data scales and filter criteria shows that the software may provide personalized and hence valuable results.
 
-Features for Improvement:
+## Features for Improvement:
 
-1.  Feature Completeness:
+### 1.  Feature Completeness:
 
 While the app has a solid foundation, including time-series analysis might improve knowledge of economic patterns over time. The inclusion of interactive components, such as sliders for altering statistical model parameters in real-time, might increase user engagement.
 
-2.  Enhancement Suggestions:
+### 2.  Enhancement Suggestions:
 
 Implementing machine learning models might give predicted insights, providing consumers with an additional layer of analysis. A "suggestions" feature that suggests factors to examine depending on the user's present focus might point less experienced users in the direction of a more in-depth examination.
 
-Documentation of Strengths and Gaps:
+## Documentation of Strengths and Gaps:
 
-1.  Strengths:
+### 1.  Strengths:
 
 The app's utilization of a diverse set of economic indicators and data from trustworthy sources gives a solid platform for research. The combination of qualitative and quantitative data analysis methods appeals to a wide range of economic study.
 
-2.  Gaps:
+### 2.  Gaps:
 
 Through complex statistical modeling, there may be a gap in assisting less technically capable individuals. This might be addressed via a guided lesson or assistance section. The program might be improved by include contextual information or case studies that explain why different nations' economic trajectories deviated, assisting in data comprehension.
 
-Major Recommendations:
+## Major Recommendations:
 
-1.  Workflow Improvements:
+### 1.  Workflow Improvements:
 
 Introduce a guided tour to acquaint first-time users with the app's features and data interpretation. To simplify the research process, provide a tool that proposes comparable nations to compare depending on the user's pick.
 
-2.  Layout Enhancements:
+### 2.  Layout Enhancements:
 
 Consider including an overview dashboard that presents important indications and conclusions for the user's current choices. Improve mobile responsiveness to provide accessibility across devices.
 
-3.  Feature Additions:
+### 3.  Feature Additions:
 
 Create a scenario analysis tool that allows users to simulate economic consequences depending on hypothetical changes in policy or global economic circumstances. Make it possible for users to export their results, including graphs and models, for use in reports or additional study.
