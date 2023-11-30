@@ -69,13 +69,40 @@ ui <- fluidPage(
       tabsetPanel(
         tabPanel("a"),
         tabPanel("b"),
-        tabPanel("c")
+        tabPanel(
+          "c",
+          mainPanel(
+            dataTableOutput("full_data")
+          )) #tabpanel 1
+        
       )
     )
   )
 )
 
 server <- function(input, output) {
+    # output$barplot <- renderPlotly({
+    # plot1 <- ggplot(data = joined_df %>%
+    #                   mutate(status = fct_rev(fct_relevel(.f = status, "Returning")))) +
+    #   geom_bar(aes(x = g_year, fill = status)) +
+    #   labs(title = "BENS Member Count by Status") +
+    #   xlab("Year") +
+    #   ylab("Count of Members") + 
+    #   scale_x_continuous(breaks=seq(year_min(),year_max(),2)) +
+    #   theme(axis.title = element_text(face="bold"), 
+    #         title = element_text(face="bold"),
+    #         axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+    #   scale_fill_manual(values = status_colors)
+    # ggplotly(plot1) %>%
+    #   layout(height = 400, width = 900)})
+  
+  output$full_data <- DT::renderDT(
+    {
+      joined_df
+    },
+    filter = "top",
+    options = list(pageLength = 20, autoWidth = TRUE)
+  )
 
 }
 
