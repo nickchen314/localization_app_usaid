@@ -29,17 +29,12 @@ award_max <- max(joined_df$total_obligated_amount)
 
 # Define UI for application that shows data
 ui <- fluidPage(
-  theme = bs_theme(
-    version = 5, bootswatch = "darkly",
-    bg = "#0b3d91", # a custom blue
-    fg = "white",
-    base_font = "Source Sans Pro"
-  ),
+  theme = bslib::bs_theme(version = 5, bootswatch = "materia"),
   sidebarLayout(
     sidebarPanel(
       selectizeInput("ppp_country1", "Search a Country",
                   choices = c(unique(joined_df$primary_place_of_performance_country_name)),
-                  options = list(placeholder = "select a country name")),
+                  options = list(placeholder = "search a country name")),
       sliderTextInput(
         inputId = "year1",
         label = "Year Select",
@@ -67,7 +62,10 @@ ui <- fluidPage(
     ),
     mainPanel(
       tabsetPanel(
-        tabPanel("a"),
+        tabPanel("a",
+          mainPanel(
+            plotlyOutput("barplot")
+                 )),
         tabPanel("b"),
         tabPanel(
           "c",
@@ -81,20 +79,18 @@ ui <- fluidPage(
 )
 
 server <- function(input, output) {
-    # output$barplot <- renderPlotly({
-    # plot1 <- ggplot(data = joined_df %>%
-    #                   mutate(status = fct_rev(fct_relevel(.f = status, "Returning")))) +
-    #   geom_bar(aes(x = g_year, fill = status)) +
-    #   labs(title = "BENS Member Count by Status") +
-    #   xlab("Year") +
-    #   ylab("Count of Members") + 
-    #   scale_x_continuous(breaks=seq(year_min(),year_max(),2)) +
-    #   theme(axis.title = element_text(face="bold"), 
-    #         title = element_text(face="bold"),
-    #         axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
-    #   scale_fill_manual(values = status_colors)
-    # ggplotly(plot1) %>%
-    #   layout(height = 400, width = 900)})
+    output$barplot <- renderPlotly({
+    plot1 <- ggplot(data = joined_df) +
+       geom_bar(aes(x = award_base_action_date_fiscal_year, fill = is.local)) +
+       labs(title = str_c(input$ppp_country1, ": Count of Projections by Localization Status")) +
+       xlab("Fiscal Year") +
+       ylab("Count of Projects") + 
+       scale_x_continuous(breaks=seq(year_min,year_max,2)) +
+       theme(axis.title = element_text(face="bold"), 
+             title = element_text(face="bold"),
+             axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) 
+     ggplotly(plot1) %>%
+       layout(height = 400, width = 900)})
   
   output$full_data <- DT::renderDT(
     {
