@@ -47,11 +47,12 @@ ui <- fluidPage(
         grid = FALSE, dragRange = FALSE),
       searchInput(
         inputId = "awardthreshold", 
+        value = 0,
         label = "Enter Minimum Award Value($)", 
         placeholder = "Enter Integer", 
         btnSearch = icon("search"), 
         btnReset = icon("remove"),
-        resetValue = 0, 
+        resetValue = award_min, 
         width = "100%"
       ),
       pickerInput("award_type1", "What type(s) of awards?",
@@ -97,13 +98,14 @@ server <- function(input, output) {
         )) %>%
         filter(primary_place_of_performance_country_name %in% req(input$ppp_country1)) %>%
         filter(award_base_action_date_fiscal_year %in% (input$year1[1]:input$year1[2])) %>%
-        filter(is.grant %in% input$award_type1) 
+        filter(is.grant %in% input$award_type1) %>%
+        filter(as.double(total_obligated_amount) >= as.double(req(input$awardthreshold)))
       ##fixme need filtering by award threshold
     })
     output$barplot <- renderPlotly({
-    plot1 <- ggplot(data = joined_df) +
+    plot1 <- ggplot(data = filtered_df()) +
        geom_bar(aes(x = award_base_action_date_fiscal_year, fill = is.local)) +
-       labs(title = str_c(input$ppp_country1, ": Count of Projections by Localization Status")) +
+       labs(title = "Count of Projections by Localization Status") +
        xlab("Fiscal Year") +
        ylab("Count of Projects") + 
        scale_x_continuous(breaks=seq(year_min,year_max,2)) +
@@ -111,7 +113,13 @@ server <- function(input, output) {
              title = element_text(face="bold"),
              axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) 
      ggplotly(plot1) %>%
-       layout(height = 400, width = 900)})
+       layout(height = 400, width = 900, 
+              annotations = 
+                list(x = 1, y = -.2, text = "citation", 
+                     showarrow = F, xref='paper', yref='paper', 
+                     xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                     font=list(size=15, color="black")))
+              })
   
   output$full_data <- DT::renderDT(
     {
