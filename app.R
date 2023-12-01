@@ -35,6 +35,7 @@ ui <- fluidPage(
       pickerInput("ppp_country1", "Search a Country",
                   choices = c(unique(joined_df$primary_place_of_performance_country_name)),
                   multiple = TRUE,
+                  selected = "MOROCCO",
                   options = pickerOptions(liveSearch = TRUE, 
                                           actionsBox = TRUE,
                                           size = 10)),
@@ -83,6 +84,22 @@ ui <- fluidPage(
 
 
 server <- function(input, output) {
+    filtered_df <- reactive({
+      joined_df %>%
+        mutate(is.local = case_when(
+          is.local == T ~ "local",
+          is.local == F ~ "non-local",
+          is.na(is.local) ~ "incomplete location information"
+        )) %>%
+        mutate(is.grant = case_when(
+          is.grant == T ~ "Grant",
+          is.grant == F ~ "Contract"
+        )) %>%
+        filter(primary_place_of_performance_country_name %in% req(input$ppp_country1)) %>%
+        filter(award_base_action_date_fiscal_year %in% (input$year1[1]:input$year1[2])) %>%
+        filter(is.grant %in% input$award_type1) 
+      ##fixme need filtering by award threshold
+    })
     output$barplot <- renderPlotly({
     plot1 <- ggplot(data = joined_df) +
        geom_bar(aes(x = award_base_action_date_fiscal_year, fill = is.local)) +
@@ -92,14 +109,13 @@ server <- function(input, output) {
        scale_x_continuous(breaks=seq(year_min,year_max,2)) +
        theme(axis.title = element_text(face="bold"), 
              title = element_text(face="bold"),
-             axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
-      facet_wrap(~recipient_country_name) 
+             axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) 
      ggplotly(plot1) %>%
        layout(height = 400, width = 900)})
   
   output$full_data <- DT::renderDT(
     {
-      joined_df
+      filtered_df()
     },
     filter = "top",
     options = list(pageLength = 20, autoWidth = TRUE)
