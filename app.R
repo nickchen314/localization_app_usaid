@@ -111,7 +111,8 @@ server <- function(input, output) {
        scale_x_continuous(breaks=seq(year_min,year_max,2)) +
        theme(axis.title = element_text(face="bold"), 
              title = element_text(face="bold"),
-             axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) 
+             axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+      facet_wrap(~recipient_country_name)
      ggplotly(plot1) %>%
        layout(height = 400, width = 900, 
               annotations = 
