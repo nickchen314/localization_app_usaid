@@ -101,26 +101,33 @@ server <- function(input, output) {
         filter(is.grant %in% input$award_type1) %>%
         filter(as.double(total_obligated_amount) >= as.double(req(input$awardthreshold)))
       ##fixme need filtering by award threshold
+      
+    
     })
     output$barplot <- renderPlotly({
-    plot1 <- ggplot(data = filtered_df()) +
-       geom_bar(aes(x = award_base_action_date_fiscal_year, fill = is.local)) +
-       labs(title = "Count of Projections by Localization Status") +
-       xlab("Fiscal Year") +
-       ylab("Count of Projects") + 
-       scale_x_continuous(breaks=seq(year_min,year_max,2)) +
-       theme(axis.title = element_text(face="bold"), 
-             title = element_text(face="bold"),
-             axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
-      facet_wrap(~recipient_country_name)
-     ggplotly(plot1) %>%
-       layout(height = 400, width = 900, 
-              annotations = 
-                list(x = 1, y = -.2, text = "citation", 
-                     showarrow = F, xref='paper', yref='paper', 
-                     xanchor='right', yanchor='auto', xshift=0, yshift=0,
-                     font=list(size=15, color="black")))
-              })
+      # Filter the data for selected countries
+      filtered_data <- filtered_df() %>%
+        filter(recipient_country_name %in% input$ppp_country1)
+      
+      # Create the plot using the filtered data
+      plot1 <- ggplot(data = filtered_data) +
+        geom_bar(aes(x = award_base_action_date_fiscal_year, fill = is.local)) +
+        labs(title = "Count of Projections by Localization Status") +
+        xlab("Fiscal Year") +
+        ylab("Count of Projects") + 
+        scale_x_continuous(breaks = seq(year_min, year_max, 2)) +
+        theme(axis.title = element_text(face = "bold"), 
+              title = element_text(face = "bold"),
+              axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+        facet_wrap(as.formula(paste0("~recipient_country_name")), scales = "free_y", ncol = 2)
+      
+      ggplotly(plot1) %>%
+        layout(height = 400, width = 900, 
+               annotations = list(x = 1, y = -.2, text = "citation", 
+                                  showarrow = F, xref = 'paper', yref = 'paper', 
+                                  xanchor = 'right', yanchor = 'auto', xshift = 0, yshift = 0,
+                                  font = list(size = 15, color = "black")))
+    })
   
   output$full_data <- DT::renderDT(
     {
