@@ -43,7 +43,7 @@ ui <- fluidPage(
         grid = FALSE, dragRange = FALSE),
       searchInput(
         inputId = "awardthreshold", 
-        label = "Enter Minimum Award Value($)", 
+        label = "Enter Minimum Obligation Value($)", 
         placeholder = "Enter Integer", 
         btnSearch = icon("search"), 
         btnReset = icon("remove"),
@@ -79,22 +79,35 @@ ui <- fluidPage(
 )
 
 server <- function(input, output) {
-    output$barplot <- renderPlotly({
-    plot1 <- ggplot(data = joined_df) +
-       geom_bar(aes(x = award_base_action_date_fiscal_year, fill = is.local)) +
-       labs(title = str_c(input$ppp_country1, ": Count of Projections by Localization Status")) +
-       xlab("Fiscal Year") +
-       ylab("Count of Projects") + 
-       scale_x_continuous(breaks=seq(year_min,year_max,2)) +
-       theme(axis.title = element_text(face="bold"), 
-             title = element_text(face="bold"),
-             axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) 
-     ggplotly(plot1) %>%
-       layout(height = 400, width = 900)})
+  
+  filtered_df <- reactive({
+    joined_df %>%
+      mutate(is.local = case_when(is.local == T ~ "local",
+                                  is.local == F ~ "non-local",
+                                  is.na(is.local) ~ "no location")) %>%
+      mutate(is.grant = case_when(is.grant == T ~ "Grant",
+                                  is.grant == F ~ "Contract")) %>%
+      filter(primary_place_of_performance_country_name == input$ppp_country1) %>%
+      filter(award_base_action_date_fiscal_year %in% c(input$year1[1]:input$year1[2]))
+             
+             total_obligated_amount >= as.double(input$awardthreshold[1])) 
+    })
+  output$barplot <- renderPlotly({
+  plot1 <- ggplot(data = joined_df) +
+     geom_bar(aes(x = award_base_action_date_fiscal_year, fill = is.local)) +
+     labs(title = str_c(input$ppp_country1, ": Count of Projects by Localization Status")) +
+     xlab("Fiscal Year") +
+     ylab("Count of Projects") + 
+     scale_x_continuous(breaks=seq(year_min,year_max,2)) +
+     theme(axis.title = element_text(face="bold"), 
+           title = element_text(face="bold"),
+           axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) 
+   ggplotly(plot1) %>%
+     layout(height = 400, width = 900)})
   
   output$full_data <- DT::renderDT(
     {
-      joined_df
+      filtered_df()
     },
     filter = "top",
     options = list(pageLength = 20, autoWidth = TRUE)
