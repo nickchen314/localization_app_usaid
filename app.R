@@ -12,8 +12,8 @@ thematic_shiny(font = "auto")
 ##Business Logic
 
 #loads data
-contracts_prime <- read_csv("./data-raw/Contracts_PrimeAwardSummaries_2023-10-01_H04M40S14_1.csv")
-grants_prime <- read_csv("./data-raw/Assistance_PrimeAwardSummaries_2023-10-09_H17M29S35_1.csv")
+contracts_prime <- readRDS("./data-raw/contracts.rds")
+grants_prime <- readRDS("./data-raw/grants.rds")
 #calls function to join data
 source("./.R/func_clean_df.R")
 joined_df <- func_clean_df(grants_prime, contracts_prime)
@@ -100,7 +100,6 @@ server <- function(input, output) {
         filter(award_base_action_date_fiscal_year %in% (input$year1[1]:input$year1[2])) %>%
         filter(is.grant %in% input$award_type1) %>%
         filter(as.double(total_obligated_amount) >= as.double(req(input$awardthreshold)))
-      ##fixme need filtering by award threshold
       
     
     })
