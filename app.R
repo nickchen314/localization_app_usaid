@@ -18,14 +18,16 @@ grants_prime <- readRDS("./data-raw/grants.rds")
 source("./.R/func_clean_df.R")
 joined_df <- func_clean_df(grants_prime, contracts_prime)
 
-##need to fully clean country names
-##need to join df with recipients df 
 
-##defines min and max FY and award thresholds
+#defines min and max FY and award thresholds
 year_min <- min(joined_df$award_base_action_date_fiscal_year)
 year_max <- max(joined_df$award_base_action_date_fiscal_year)
 award_min <- min(joined_df$total_obligated_amount)
 award_max <- max(joined_df$total_obligated_amount)
+
+#defines color scheme
+local_colors <-setNames(c("#F8766D", "#7CAE00", "gray"), 
+                         c("non-local", "local", "incomplete location information"))
 
 # Define UI for application that shows data
 ui <- fluidPage(
@@ -38,7 +40,8 @@ ui <- fluidPage(
                   selected = "MOROCCO",
                   options = pickerOptions(liveSearch = TRUE, 
                                           actionsBox = TRUE,
-                                          size = 10)),
+                                          size = 10,
+                                          selectedTextFormat = "count > 5")),
       sliderTextInput(
         inputId = "year1",
         label = "Year Select",
@@ -63,13 +66,15 @@ ui <- fluidPage(
                     actionsBox = TRUE, 
                     size = 10
                   )
-      )
+      ),
+      checkboxInput("facet", "Facet Graphs?")
     ),
     mainPanel(
       tabsetPanel(
         tabPanel("a",
           mainPanel(
-            plotlyOutput("barplot")
+            plotlyOutput("barplot_counts"),
+            plotlyOutput("barplot_countsprop")
                  )),
         tabPanel("b"),
         tabPanel(
@@ -103,29 +108,60 @@ server <- function(input, output) {
       
     
     })
-    output$barplot <- renderPlotly({
-      # Filter the data for selected countries
-      filtered_data <- filtered_df() %>%
-        filter(recipient_country_name %in% input$ppp_country1)
-      
+    ##project counts
+    output$barplot_counts <- renderPlotly({
       # Create the plot using the filtered data
-      plot1 <- ggplot(data = filtered_data) +
+      plot1 <- ggplot(data = filtered_df()) +
         geom_bar(aes(x = award_base_action_date_fiscal_year, fill = is.local)) +
-        labs(title = "Count of Projections by Localization Status") +
+        labs(title = "Count of USAID Projects by Localization Status") +
         xlab("Fiscal Year") +
         ylab("Count of Projects") + 
         scale_x_continuous(breaks = seq(year_min, year_max, 2)) +
         theme(axis.title = element_text(face = "bold"), 
               title = element_text(face = "bold"),
-              axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
-        facet_wrap(as.formula(paste0("~recipient_country_name")), scales = "free_y", ncol = 2)
+              axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+              axis.title.x = element_text(margin = margin(t = 15, r = 0, b = 0, l = 0))) +
+        scale_fill_manual(values = local_colors) 
+      
+      if(input$facet == T) {
+        plot1 <- plot1 +
+          facet_wrap(as.formula(paste0("~primary_place_of_performance_country_name")), scales = "free_y", ncol = 2) 
+      }
       
       ggplotly(plot1) %>%
         layout(height = 400, width = 900, 
-               annotations = list(x = 1, y = -.2, text = "citation", 
+               annotations = list(x = 1, y = -.21, text = "Accountability Research Center", 
                                   showarrow = F, xref = 'paper', yref = 'paper', 
                                   xanchor = 'right', yanchor = 'auto', xshift = 0, yshift = 0,
-                                  font = list(size = 15, color = "black")))
+                                  font = list(size = 10, color = "black"))) 
+    })
+    
+    ##proportion of project count
+    output$barplot_countsprop <- renderPlotly({
+      # Create the plot using the filtered data
+      plot1 <- ggplot(data = filtered_df()) +
+        geom_bar(aes(x = award_base_action_date_fiscal_year, fill = is.local), position = "fill") +
+        labs(title = "Proportion of Projects by Localization Status") +
+        xlab("Fiscal Year") +
+        ylab("Proportion of Projects") + 
+        scale_x_continuous(breaks = seq(year_min, year_max, 2)) +
+        theme(axis.title = element_text(face = "bold"), 
+              title = element_text(face = "bold"),
+              axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+              axis.title.x = element_text(margin = margin(t = 15, r = 0, b = 0, l = 0))) +
+        scale_fill_manual(values = local_colors) 
+      
+      if(input$facet == T) {
+        plot1 <- plot1 +
+          facet_wrap(as.formula(paste0("~primary_place_of_performance_country_name")), scales = "free_y", ncol = 3) 
+      }
+      
+      ggplotly(plot1) %>%
+        layout(height = 400, width = 900, 
+               annotations = list(x = 1, y = -.21, text = "Accountability Research Center", 
+                                  showarrow = F, xref = 'paper', yref = 'paper', 
+                                  xanchor = 'right', yanchor = 'auto', xshift = 0, yshift = 0,
+                                  font = list(size = 10, color = "black"))) 
     })
   
   output$full_data <- DT::renderDT(
