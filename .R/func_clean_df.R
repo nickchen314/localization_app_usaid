@@ -47,7 +47,7 @@ func_clean_df <- function(grants_prime, contracts_prime){
     rename("recipient_country_name" = "Country") %>%
     mutate(primary_place_of_performance_country_name = case_when(
       is.na(primary_place_of_performance_country_code) ~ "NO LOCATION INFO",
-      .default = recipient_country_name))
+      .default = primary_place_of_performance_country_name))
   joined_df3
 }
 
