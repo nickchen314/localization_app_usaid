@@ -131,6 +131,7 @@ server <- function(input, output) {
       filter(as.double(total_obligated_amount) >= as.double(req(input$awardthreshold)))
   })
 
+  ##### GRAPHS
   ## project counts
   output$barplot_counts <- renderPlotly({
     # Create the plot using the filtered data
@@ -253,7 +254,6 @@ server <- function(input, output) {
       )
   })
   
-
   ## proportion of obligation
   output$barplot_valueprop <- renderPlotly({
     # Create the plot using the filtered data
