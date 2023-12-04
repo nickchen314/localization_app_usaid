@@ -32,7 +32,7 @@ func_clean_df <- function(grants_prime, contracts_prime){
                                 primary_place_of_performance_country_code != recipient_country_code ~ F))
   
   ##cleans country codes
-  code_names <- readxl::read_excel("./data-raw/gg-updated-country-and-state-lists.xlsx") %>% rename("country_code" = "Country Code") %>%
+  code_names <- readRDS("./data-raw/country_codes.rds") %>% rename("country_code" = "Country Code") %>%
     mutate(country_code = str_squish(country_code))
   joined_df2 <- left_join(joined_df, code_names, by = join_by("primary_place_of_performance_country_code" == "country_code")) %>%
     rename("primary_place_of_performance_country_name" = "Country")
@@ -44,8 +44,10 @@ func_clean_df <- function(grants_prime, contracts_prime){
       .default = recipient_country_code)) %>%
     select(-country_code) %>%
     left_join(code_names, by = join_by("recipient_country_code" == "country_code")) %>%
-    rename("recipient_country_name" = "Country")
-  ##note ~20 recipient codes not fully covered
+    rename("recipient_country_name" = "Country") %>%
+    mutate(primary_place_of_performance_country_name = case_when(
+      is.na(primary_place_of_performance_country_code) ~ "NO LOCATION INFO",
+      .default = recipient_country_name))
   joined_df3
 }
 
