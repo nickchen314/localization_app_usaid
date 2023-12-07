@@ -81,7 +81,7 @@ ui <- fluidPage(
           size = 10
         )
       ),
-      checkboxInput("facet", "Facet Graphs?"),
+      checkboxInput("facet", "Aggregate Countries?"),
       downloadButton('downFile',label = "Download Table")
     ),
     mainPanel(
@@ -140,7 +140,7 @@ server <- function(input, output) {
       labs(title = "Count of USAID Projects by Localization Status") +
       xlab("Fiscal Year") +
       ylab("Count of Projects") +
-      scale_x_continuous(breaks = seq(year_min, year_max, 2)) +
+      scale_x_continuous(breaks = seq(year_min, year_max, 1)) +
       theme(
         axis.title = element_text(face = "bold"),
         title = element_text(face = "bold"),
@@ -149,7 +149,7 @@ server <- function(input, output) {
       ) +
       scale_fill_manual(values = local_colors)
 
-    if (input$facet == T) {
+    if (input$facet == FALSE) {
       plot1 <- plot1 +
         facet_wrap(~primary_place_of_performance_country_name, scales = "free_y", ncol = 2)
     }
@@ -174,7 +174,7 @@ server <- function(input, output) {
       labs(title = "Proportion of Projects by Localization Status") +
       xlab("Fiscal Year") +
       ylab("Proportion of Projects") +
-      scale_x_continuous(breaks = seq(year_min, year_max, 2)) +
+      scale_x_continuous(breaks = seq(year_min, year_max, 1)) +
       theme(
         axis.title = element_text(face = "bold"),
         title = element_text(face = "bold"),
@@ -183,7 +183,7 @@ server <- function(input, output) {
       ) +
       scale_fill_manual(values = local_colors)
 
-    if (input$facet == T) {
+    if (input$facet == FALSE) {
       plot1 <- plot1 +
         facet_wrap(~primary_place_of_performance_country_name, scales = "free_y", ncol = 2)
     }
@@ -202,13 +202,13 @@ server <- function(input, output) {
   
   ##obs df
   obs_df <- reactive({
-    if (input$facet == TRUE) {
+    if (input$facet == FALSE) {
       df1 <- filtered_df() %>%
         group_by(primary_place_of_performance_country_name, award_base_action_date_fiscal_year, is.local) %>%
         summarize(total_amount = sum(total_obligated_amount))
     } 
     
-    if (input$facet == FALSE) {
+    if (input$facet == TRUE) {
       df1 <- filtered_df() %>%
         group_by(award_base_action_date_fiscal_year, is.local) %>%
         summarize(total_amount = sum(total_obligated_amount))
@@ -228,7 +228,7 @@ server <- function(input, output) {
       labs(title = "Obligations of USAID Projects by Localization Status") +
       xlab("Fiscal Year") +
       ylab("Value of Projects ($)") +
-      scale_x_continuous(breaks = seq(year_min, year_max, 2)) +
+      scale_x_continuous(breaks = seq(year_min, year_max, 1)) +
       theme(
         axis.title = element_text(face = "bold"),
         title = element_text(face = "bold"),
@@ -238,7 +238,7 @@ server <- function(input, output) {
       scale_fill_manual(values = local_colors) +
       scale_y_continuous(labels = scales::dollar_format(scale = .000001, suffix = "M"))
 
-    if (input$facet == T) {
+    if (input$facet == FALSE) {
       plot1 <- plot1 +
         facet_wrap(~primary_place_of_performance_country_name, scales = "free_y", ncol = 2)
     }
@@ -269,7 +269,7 @@ server <- function(input, output) {
       labs(title = "Proportion of Project Obligations by Localization Status") +
       xlab("Fiscal Year") +
       ylab("Proportion of Project Obligations") +
-      scale_x_continuous(breaks = seq(year_min, year_max, 2)) +
+      scale_x_continuous(breaks = seq(year_min, year_max, 1)) +
       theme(
         axis.title = element_text(face = "bold"),
         title = element_text(face = "bold"),
@@ -278,7 +278,7 @@ server <- function(input, output) {
       ) +
       scale_fill_manual(values = local_colors)
 
-    if (input$facet == T) {
+    if (input$facet == F) {
       plot1 <- plot1 +
         facet_wrap(~primary_place_of_performance_country_name, scales = "free_y", ncol = 2)
     }
@@ -310,6 +310,13 @@ server <- function(input, output) {
       write.csv(filtered_df(), file, row.names = FALSE)
     }
   )
+  
+  output$year_select <- renderUI({sliderTextInput(
+    inputId = "year1",
+    label = "Year Select",
+    choices = c(year_min():year_max()),
+    selected =c(year_min(), year_max()),
+    grid = FALSE, dragRange = FALSE)})
 }
 
 # Run the application
