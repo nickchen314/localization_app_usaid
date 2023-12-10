@@ -7,9 +7,20 @@ library(DT)
 library(thematic)
 library(shinyWidgets)
 library(plotly)
+library(scales)
+library(sf)
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(mapview)
+library(leaflet)
+
 thematic_shiny(font = "auto")
 
 ## Business Logic
+
+world <- ne_countries(scale = "medium", returnclass = "sf")
+
+
 
 # loads data
 contracts_prime <- readRDS("./data-raw/contracts.rds")
@@ -105,7 +116,13 @@ ui <- fluidPage(
           mainPanel(
             dataTableOutput("full_data")
           )
-        ) # tabpanel 3
+        ), #tab panel 3
+        tabPanel(
+          "Map",
+          mainPanel(
+            plotlyOutput("map")
+          )
+        ) #tab panel 3
       ) ## tabset panel
     ) ## main panel
   ) ## sidebar layout
@@ -303,6 +320,8 @@ server <- function(input, output) {
     options = list(pageLength = 20, autoWidth = TRUE)
   )
   
+
+  
   ## file download for download button
   output$downFile <- downloadHandler(
     filename = "usaid_localization_data.csv",
@@ -311,12 +330,32 @@ server <- function(input, output) {
     }
   )
   
-  output$year_select <- renderUI({sliderTextInput(
-    inputId = "year1",
-    label = "Year Select",
-    choices = c(year_min():year_max()),
-    selected =c(year_min(), year_max()),
-    grid = FALSE, dragRange = FALSE)})
+  ##mapping feature
+  output$map <- renderPlotly({
+    df1 <- filtered_df() %>%
+      group_by(recipient_country_code) %>%
+      summarize(tot_ob = sum(total_obligated_amount)) 
+    IQR <- quantile(df1$tot_ob, .75) - quantile(df1$tot_ob, .25)
+    map_dat <- right_join(df1, world, by = join_by("recipient_country_code" == "adm0_a3_us"))
+    ggplot(data = map_dat) + 
+      geom_sf(aes(fill=tot_ob, geometry = geometry)) +
+      scale_fill_gradient(limits=c(
+        0, 
+        quantile(df1$tot_ob, .75) + 1.5 * IQR), 
+        low="blue", high="red", oob=squish, label=comma) +
+      labs(title = "Total Obligations to Selected Country Filled by Recipient Country") +
+      theme_void() -> plot1
+    ggplotly(plot1)%>%
+      layout(
+        height = 500, width = 1000,
+        annotations = list(
+          x = 1, y = -.21, text = "Accountability Research Center",
+          showarrow = F, xref = "paper", yref = "paper",
+          xanchor = "right", yanchor = "auto", xshift = 0, yshift = 0,
+          font = list(size = 10, color = "black")
+        )
+      )
+  })
 }
 
 # Run the application
