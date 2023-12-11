@@ -98,6 +98,27 @@ ui <- fluidPage(
     mainPanel(
       tabsetPanel(
         tabPanel(
+          "Introduction",
+          h2("Data Overview"),
+          p("This Shiny app provides an analysis of USAID-funded projects. It includes data on contracts and grants awarded over various fiscal years, detailing the obligated amounts and project localization."),
+          p("The datasets utilized in this app are derived from two primary sources:"),
+          tags$ul(
+            tags$li("Contracts Data: Contains detailed information about contracts awarded by USAID."),
+            tags$li("Grants Data: Contains detailed information about grants awarded by USAID.")
+          ),
+          h2("Using the App"),
+          p("To interact with the app, follow these steps:"),
+          tags$ol(
+            tags$li("Select the desired country or countries from the 'Search a Country' dropdown."),
+            tags$li("Use the 'Year Select' slider to choose the range of fiscal years."),
+            tags$li("Enter a minimum value for project awards in the 'Enter Minimum Award Value($)' field."),
+            tags$li("Choose the type(s) of awards to display using the 'What type(s) of awards?' selector."),
+            tags$li("Check the 'Aggregate Countries?' box if you want to combine data from selected countries."),
+            tags$li("Click 'Download Table' to save the currently displayed data to a CSV file.")
+          ),
+          p("Navigate through the tabs to view different data visualizations and tables. Interactive charts and maps are available for a dynamic exploration experience.")
+        ),
+        tabPanel(
           "Count of Projects",
           mainPanel(
             plotlyOutput("barplot_counts"),
