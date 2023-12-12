@@ -99,10 +99,14 @@ ui <- fluidPage(
           "Introduction",
           h2("Data Overview"),
           p("This Shiny app provides an analysis of USAID-funded projects. It includes data on contracts and grants awarded over various fiscal years, detailing the obligated amounts and project localization."),
-          p("The datasets utilized in this app are derived from two primary sources:"),
-          tags$ul(
-            tags$li("Contracts Data: Contains detailed information about contracts awarded by USAID."),
-            tags$li("Grants Data: Contains detailed information about grants awarded by USAID.")
+          p("The datasets utilized in this app are derived from a data download from usaspending, the official U.S government database for grants and contracts data."),
+          p(
+            "For further information visit the ",
+            tags$a(
+              "USASpending Website.",
+              target = "_blank",
+              href = "https://www.usaspending.gov/"
+            )
           ),
           h2("Using the App"),
           p("To interact with the app, follow these steps:"),
@@ -362,7 +366,7 @@ server <- function(input, output) {
         0, 
         quantile(df1$tot_ob, .75) + 1.5 * IQR), 
         low="blue", high="red", oob=squish, label=comma) +
-      labs(title = "Total Obligations to Selected Country Filled by Recipient Country") +
+      labs(title = "Total Obligations($) Filled by Recipient Organization Country") +
       theme_void() -> plot1
     ggplotly(plot1)%>%
       layout(
