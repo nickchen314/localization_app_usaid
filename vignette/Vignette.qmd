@@ -6,6 +6,7 @@ format: html
 editor: visual
 ---
 
+<<<<<<< HEAD
 ```{block, include: false}
 #Contributers
 
@@ -110,3 +111,17 @@ sum(example_dataset$total_obligated_amount)
 Now we have a full statistical view of any column we want or a sum of the money. It is yours to manipulate and explore!
 
 ## 
+=======
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+>>>>>>> refs/remotes/origin/tristans
