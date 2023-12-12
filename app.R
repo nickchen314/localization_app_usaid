@@ -9,10 +9,8 @@ library(shinyWidgets)
 library(plotly)
 library(scales)
 library(sf)
-library(rnaturalearth)
 library(rnaturalearthdata)
-library(mapview)
-library(leaflet)
+library(rnaturalearth)
 
 thematic_shiny(font = "auto")
 
