@@ -6,8 +6,27 @@ format: html
 editor: visual
 ---
 
-```{r}
-1 + 1
+```{block, include: false}
+#Contributers
+
+## Data Cleaning
+
+#Primary Contributor:
+#Co-Contributors:
+
+## App Code
+
+#Primary Contributor:
+#Co-Contributors:
+
+## Documentation:
+
+#Readme
+Primary Contributor:
+
+#Vignette
+Primary Contributor:
+Co-Contributors:
 ```
 
 ## 1. YAML Header: Title, Author, Date, and Output Format
@@ -54,17 +73,40 @@ For exploratory data analysis, the eda.R script loads CSV files with seemingly m
 
 ## 5. EDA Inputs, Controls, and Outputs
 
-We have a few inputs, such as the country (you can select more than 1), the
+We have a few inputs, such as the country (you can select more than 1), the a year range slider, a minimum award value, the type of grants (you can select more than 1), aggregate countries so you can put the graphs of the countries together or separate. Lets imagine you want to know the number of projects for awards for Albania and Algeria for both contracts and grants from 2003 to 2023, without a minimum award value in one two tables side by side. You will go to the Search a Country drop down menu and select Albania and Algeria, drag the year rang slider from to 2003, go to the What type(s) of awards and both should already be selected.
+
+![](images/Image%2012-12-23%20at%2010.04%20AM.jpg){width="418" height="397"}
+
+On the Count of Projects tab there should be four graphs:
+
+2 for the Count of USAID Projects by Localization Status and Count of Projects
+
+2 for the Proportion of Projects by Localization Status and Proportion of Projects
+
+![](images/Image%2012-12-23%20at%2010.04%20AM%20(1).jpg)
+
+If you go to the Dollar Value Projects Tab you will also have four graphs but this time the top graphs are by Dollar Value of Projects instead of Count of Projects. You will have
+
+2 Obligations of USAID Projects by Localization Status graphs
+
+2 Proportion of Project Obligations by Localization Status graphs
+
+![](images/Image%2012-12-23%20at%2010.05%20AM%202.jpg)
+
+On the Data Table Tab there is a large data table that has already been filtered by your inputs and you can download the table with our download table button and from there you can do any number of tests
+
+![](images/Image%2012-12-23%20at%2010.05%20AM.jpg)
 
 ## 6. Statistical Analysis Inputs, Controls, and Outputs
 
-Imagine you are trying to figure out the amount of aid sent to a specific country, the type of grant and how much per type. You can do this for more than one country. Let's use Morocco and Switzerland as our example. You simply, select Morocco and Switzerland from the country drop down menu, select the type of grant or both! You will then have two histograms (one per country) that show the amount of money sent per year with the type of grants. Now what if I want to use this data? There is a download file option where you can download not only the tables but the data frame on the next tab. When you select those inputs, there is also a data frame that is specifically geared towards those inputs. Now that we have this setup, lets do some analysis:
-
-## 7. References
+Lets imagine you want to know the number of projects for awards for Albania and Algeria for both contracts and grants from 2003 to 2023, without a minimum award value in one two tables side by side. Pretty much the same as 5. You will go to the Search a Country drop down menu and select Albania and Algeria, drag the year rang slider from to 2003, go to the What type(s) of awards and both should already be selected. All these pictures and tables above give a good representation of the data in a visual format. From the data set that we downloaded from problem 5 we have the ability to perform any test we want on it
 
 ```{r}
-#| echo: false
-2 * 2
+example_dataset <- read.csv("../data/usaid_localization_data.csv")
+summary(example_dataset)
+sum(example_dataset$total_obligated_amount)
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+Now we have a full statistical view of any column we want or a sum of the money. It is yours to manipulate and explore!
+
+## 
