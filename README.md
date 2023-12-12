@@ -10,7 +10,7 @@ The USAID Localization App is designed to analyze USAID contracts and project sp
 
 ## Team Members:
 
-Nick C - GitHub ID: [] 
+Nick C - GitHub ID: nickchen314 
 Tristan L - GitHub ID: [] 
 Kento H - GitHub ID: []  
 Orion F - GitHub ID: []
