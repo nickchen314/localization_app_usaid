@@ -42,11 +42,19 @@ In terms of statistical analysis, we have considered allowing users to conduct s
 
 ### Risk Assesment
 
+<<<<<<< HEAD
 Potential risks to completion included failing to create a  sufficiently clean data set in a reasonable time to allow for work on other project module and a failure for individual standalone app modules to integrate into the final product.
 
 To mitigate the first problem, we have used a csv of sample data to develop a data cleaning function which allows for work on all other app features.  Our minimal viable product will be based on this sample data set, only integrating an API if there is sufficient time.
 
 Similarly, we have refined our development approach to focus on collectively creating a minimal viable product instead of standalone modules which don't necessarily work together.  Our new development approach prioritizes essential features which eliminates the risks associated with non-compatability of app modules.
+=======
+Potential risks to completion included failing to create a sufficiently clean data set in a reasonable time to allow for work on other project module and a failure for individual standalone app modules to integrate into the final product.
+
+To mitigate the first problem, we have used a csv of sample data to develop a data cleaning function which allows for work on all other app features. Our minimal viable product will be based on this sample data set, only integrating an API if there is sufficient time.
+
+Similarly, we have refined our development approach to focus on collectively creating a minimal viable product instead of standalone modules which don't necessarily work together. Our new development approach prioritizes essential features which eliminates the risks associated with non-compatability of app modules.
+>>>>>>> refs/remotes/origin/tristans
 
 ### Outline
 
@@ -54,7 +62,11 @@ Data cleaning and gathering (completed) - Nick\
 App design and UI, user selection options - Nick: (11/20) 3 Hours\
 Mapping tab - Orion: (12/1) 5 hours\
 Graphing tab - Kento and Tristan: (12/1) 5 hours\
+<<<<<<< HEAD
 Optional features after MVP \
+=======
+Optional features after MVP\
+>>>>>>> refs/remotes/origin/tristans
 API (Nick)\
 Interactive map pins (Orion)\
 Subaward Integration\

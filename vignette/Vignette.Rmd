@@ -66,9 +66,17 @@ For exploratory data analysis, the eda.R script loads CSV files with seemingly m
 
 ## 5. EDA Inputs, Controls, and Outputs
 
+<<<<<<< HEAD
 
 ## 6. Statistical Analysis Inputs, Controls, and Outputs
 
+=======
+We have a few inputs, such as the country (you can select more than 1), the 
+
+## 6. Statistical Analysis Inputs, Controls, and Outputs
+
+Imagine you are trying to figure out the amount of aid sent to a specific country, the type of grant and how much per type. You can do this for more than one country. Let's use Morocco and Switzerland as our example. You simply, select Morocco and Switzerland from the country drop down menu, select the type of grant or both! You will then have two histograms (one per country) that show the amount of money sent per year with the type of grants. Now what if I want to use this data? There is a download file option where you can download not only the tables but the data frame on the next tab. When you select those inputs, there is also a data frame that is specifically geared towards those inputs. Now that we have this setup, lets do some analysis:
+>>>>>>> refs/remotes/origin/tristans
 
 ## 7. References
 
