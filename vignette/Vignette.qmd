@@ -6,7 +6,6 @@ format: html
 editor: visual
 ---
 
-<<<<<<< HEAD
 ```{block, include: false}
 #Contributers
 
@@ -18,16 +17,16 @@ editor: visual
 ## App Code
 
 #Primary Contributor:
-#Co-Contributors:
+#Co-Contributors: Tristan
 
 ## Documentation:
 
 #Readme
-Primary Contributor:
+Primary Contributor: Kento
 
 #Vignette
-Primary Contributor:
-Co-Contributors:
+Primary Contributor: Kento
+Co-Contributors: Tristan
 ```
 
 ## 1. YAML Header: Title, Author, Date, and Output Format
@@ -110,18 +109,12 @@ sum(example_dataset$total_obligated_amount)
 
 Now we have a full statistical view of any column we want or a sum of the money. It is yours to manipulate and explore!
 
-## 
-=======
-```{r}
-1 + 1
-```
+## 7 References
 
-You can add options to executable code like this
+USAID fiscal year 2022 localization report to Congress. (n.d.). https://www.usaid.gov/sites/default/files/2023-07/USAID%20Localization%20Report%20to%20Congress%20.pdf 
 
-```{r}
-#| echo: false
-2 * 2
-```
+(n.d.).Fentahun, Getachew.... https://www.tandfonline.com/doi/full/10.1080/23311886.2023.2241257
 
-The `echo: false` option disables the printing of code (only output is displayed).
->>>>>>> refs/remotes/origin/tristans
+Domash, A. (2022, August 24). Evidence-Based Localization: Can Existing Evidence Help Guide USAID’s Localization Agenda?. Ideas to Action. https://www.cgdev.org/blog/evidence-based-localization-can-existing-evidence-help-guide-usaids-localization-agenda
+
+(n.d.). Devex.Com. https://www.devex.com/news/usaid-overestimating-localization-spending-transparency-group-claims-105069
