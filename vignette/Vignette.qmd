@@ -12,21 +12,21 @@ editor: visual
 
 ## Data Cleaning
 
-#Primary Contributor:
-#Co-Contributors:
+Primary Contributor: Nick
+Co-Contributors:
 
 ## App Code
 
-#Primary Contributor:
-#Co-Contributors:
+#Primary Contributor: Nick
+#Co-Contributors: Tristan and Kento
 
 ## Documentation:
 
 #Readme
-Primary Contributor:
+Primary Contributor: Kento
 
 #Vignette
-Primary Contributor:
+Primary Contributor: Kento and Tristan
 Co-Contributors:
 ```
 
