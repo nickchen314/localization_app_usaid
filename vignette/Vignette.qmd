@@ -84,7 +84,7 @@ For exploratory data analysis, the eda.R script loads CSV files with seemingly m
 
 We have a few inputs, such as the country (you can select more than 1), the a year range slider, a minimum award value, the type of grants (you can select more than 1), aggregate countries so you can put the graphs of the countries together or separate. Lets imagine you want to know the number of projects for awards for Albania and Algeria for both contracts and grants from 2003 to 2023, without a minimum award value in one two tables side by side. You will go to the Search a Country drop down menu and select Albania and Algeria, drag the year rang slider from to 2003, go to the What type(s) of awards and both should already be selected.
 
-![](images/Image%2012-12-23%20at%2010.04%20AM.jpg){width="418" height="397"}
+![](../vignette/image1.jpg){width="418" height="397"}
 
 On the Count of Projects tab there should be four graphs:
 
@@ -92,7 +92,7 @@ On the Count of Projects tab there should be four graphs:
 
 2 for the Proportion of Projects by Localization Status and Proportion of Projects
 
-![](images/Image%2012-12-23%20at%2010.04%20AM%20(1).jpg)
+![](../vignette/image2.jpg){width="418" height="397"}
 
 If you go to the Dollar Value Projects Tab you will also have four graphs but this time the top graphs are by Dollar Value of Projects instead of Count of Projects. You will have
 
@@ -100,11 +100,11 @@ If you go to the Dollar Value Projects Tab you will also have four graphs but th
 
 2 Proportion of Project Obligations by Localization Status graphs
 
-![](images/Image%2012-12-23%20at%2010.05%20AM%202.jpg)
+![](../vignette/image3.jpg){width="418" height="397"}
 
 On the Data Table Tab there is a large data table that has already been filtered by your inputs and you can download the table with our download table button and from there you can do any number of tests
 
-![](images/Image%2012-12-23%20at%2010.05%20AM.jpg)
+![](../vignette/image4.jpg){width="418" height="397"}
 
 ## 6. Statistical Analysis Inputs, Controls, and Outputs
 
