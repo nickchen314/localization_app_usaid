@@ -1,0 +1,7 @@
+tags$p(tags$br(), 
+       tags$br(),
+       h4("Source Information"), 
+       "All data in this app is sourced from USAID’s", a("\"Moving Toward a Model of Locally Led Development: FY 2022 Localization Progress Report\"", href = "https://www.usaid.gov/localization/fy-2022-localization-progress-report",  target="_blank"), "report and", a("USAID's accompanying dataset.", href = "https://www.usaid.gov/localization/measurement",  target="_blank"), "A Local Partner is defined by USAID as \"an individual, a corporation, a nonprofit organization, or another body of persons that is in an acquisition or assistance partnership with USAID; is legally organized under the laws of, and has as its principal place of business or operations in a country classified as developing; and is providing assistance in the same country as its principal place of business.\"",
+       tags$br(),
+       tags$br(),
+       "This app does not alter the underlying data provided by USAID in any way. Specifically, USAID's self-reported localization shares represent figures from the agency's unpublished localization calculation while the figures on the funding obligations tab represent the shares derived directly from USAID's Localization FY2020-2022 Source Data. Any discrepancies between this dashboard's data and any other USAID data sources are likely due to existing inconsistencies between various U.S. open government datasets.")

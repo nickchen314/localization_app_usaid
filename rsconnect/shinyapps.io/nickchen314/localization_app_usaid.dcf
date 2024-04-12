@@ -5,7 +5,7 @@ account: nickchen314
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 11252557
-bundleId: 8267384
+bundleId: 8468729
 url: https://nickchen314.shinyapps.io/localization_app_usaid/
 version: 1
 asMultiple: FALSE
