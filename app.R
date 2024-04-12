@@ -14,9 +14,8 @@ thematic_shiny(font = "auto")
 ## Business Logic
 
 # loads data
-source("./.R/func_clean_data.R")
-usaid_source <- readRDS("./data-raw/project_names_fa.rds") 
-usaid_df <- func_clean_data(usaid_source)
+
+usaid_df <- readRDS("./data-raw/usaid_df_final.rds")
 usaid_percents <- readRDS("./data-raw/loc_percents1.rds")
 
 
